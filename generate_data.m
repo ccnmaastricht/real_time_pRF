@@ -90,7 +90,7 @@ noise = zscore(noise * K) * var_noise;
 %% create simulated data
 % create data based on bar stimulus and an empirically measured V1 HRF and
 % add noise
-load('stimulus')
+load('stimulus');
 two_gamma = @(t) (6*t.^5.*exp(-t))./gamma(6)...
     -1/6*(16*t.^15.*exp(-t))/gamma(16);
 t = (0:TR:34)';
@@ -104,7 +104,7 @@ Y_fft = fft(Y);
 Y = ifft(Y_fft .* hrf_fft);
 Y = Y * K;
 Y = (Y - mean(Y)) / max(std(Y)) + noise;
-
+stimulus = stimulus';
 %% Post-processing
 data = Y;
 idx = [1:num_voxels];
@@ -114,6 +114,6 @@ W = W(idx,:);
 x_vf = x_vf(idx);
 y_vf = y_vf(idx);
 sigma = sigma(idx);
-mn = min(W,[],2)
+mn = min(W,[],2);
 mx = max(W,[],2);
 W = ((W - mn) ./ (mx - mn)); %Normalize weights (RFs) between [0,1]
