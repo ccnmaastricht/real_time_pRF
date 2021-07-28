@@ -26,8 +26,10 @@ function loss = loss_func(data,stimulus,GTWff)
 	parameters.n_voxels = size(data,2);
 	prf_mapper = HGR(parameters);
 	data = zscore(data);
+%%% This is optional if data is already masked
 	[mask,corrfit] = prf_mapper.get_best_voxels(data,stimulus)
 	data = data(:,mask);
+%%%
 	parameters.n_voxels = size(data,2);
 	prf_mapper.ridge(data,stimulus);
 	gam = prf_mapper.get_features;
